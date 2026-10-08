@@ -823,7 +823,15 @@ function computeBoard(){
 
 /* ---------- Firebase (온라인 반 대결) ---------- */
 // Firebase 콘솔 → 프로젝트 설정 → 내 앱(웹)의 firebaseConfig 값을 그대로 붙여 넣어요. databaseURL이 꼭 있어야 해요.
-const FIREBASE_CONFIG=null;
+const FIREBASE_CONFIG={
+  apiKey:"AIzaSyCKFNKUXhtGdimdiLpy7YXozzXi46JjtRg",
+  authDomain:"findtheclue-61740.firebaseapp.com",
+  databaseURL:"https://findtheclue-61740-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"findtheclue-61740",
+  storageBucket:"findtheclue-61740.firebasestorage.app",
+  messagingSenderId:"436229015971",
+  appId:"1:436229015971:web:d9693473b09295c9713216"
+};
 let FB=null;
 const fbReady=()=>!!(FIREBASE_CONFIG||FB);
 async function fb(){
