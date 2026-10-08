@@ -167,6 +167,35 @@ details.adv summary{cursor:pointer;font-weight:700;color:#ffe48f;font-size:18px;
 .btable .rank{font-size:24px;font-weight:900}
 .btable tr.first td{background:#4a3c00}
 
+/* 학생 입장 */
+#join{align-items:center;justify-content:center;overflow:auto;padding:20px;gap:14px}
+.jcard{background:#1b2f66;border-radius:28px;padding:26px 24px;max-width:600px;width:100%;text-align:center;margin-top:auto}
+#join .tlink{margin-bottom:auto}
+.jcard h1{margin:0 0 4px;font-size:34px}
+.jq{font-size:26px;margin:10px 0 16px;color:#ffe48f;font-weight:800}
+.codebox{display:flex;gap:12px;justify-content:center;margin-bottom:18px}
+.codebox span{width:66px;height:80px;border-radius:16px;background:#fff;color:#1c2b55;font-size:46px;font-weight:900;display:flex;align-items:center;justify-content:center}
+.codebox span.cur{outline:5px solid #ffd34d}
+.pad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:340px;margin:0 auto}
+.pad button{height:74px;border:0;border-radius:18px;background:#2c4590;color:#fff;font-size:36px;font-weight:800}
+.pad button.sm{font-size:20px}
+.pad button:active,.jbtn:active{transform:scale(.95)}
+.jgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.jgrid.n{grid-template-columns:repeat(4,1fr)}
+.jbtn{border:0;border-radius:22px;padding:16px 6px;font-size:34px;font-weight:900;color:#1c2b55;min-height:100px}
+.jbtn small{display:block;font-size:17px;font-weight:700;opacity:.75}
+.jbtn:disabled{opacity:.3;cursor:default}
+.jmsg{color:#ffb3c1;font-weight:700;min-height:1.4em;font-size:20px;margin-top:12px}
+.quick{width:100%;margin-bottom:8px;font-size:22px!important}
+.tlink{background:none;border:0;color:#9fb2ea;text-decoration:underline;font-size:17px;padding:8px}
+.tdot{display:inline-block;width:.8em;height:.8em;border-radius:50%;margin-right:6px;vertical-align:middle;border:2px solid #fff8}
+.joinbox{display:flex;gap:24px;align-items:center;justify-content:center;flex-wrap:wrap;background:#1b2f66;border-radius:20px;padding:16px;margin-bottom:16px;font-size:20px;text-align:center}
+.qr svg{width:190px;height:190px;background:#fff;border-radius:12px;display:block}
+.rc.big{display:inline-block;font-size:64px;letter-spacing:10px;padding:2px 18px;margin:4px 0}
+.jhow{color:#cfe0ff}
+.jurl{color:#9fb2ea;font-size:15px;margin-top:4px}
+@media (max-width:480px){.jgrid.n{grid-template-columns:repeat(3,1fr)}.codebox span{width:56px;height:68px}}
+
 /* 온라인 */
 .tin{font:inherit;font-size:24px;width:160px;border-radius:12px;border:2px solid #3d57a8;background:#142252;color:#fff;padding:8px 12px;text-transform:uppercase;letter-spacing:4px}
 .err{color:#ffb3c1;font-weight:700;min-height:1.2em;flex-basis:100%}
@@ -187,36 +216,29 @@ details.adv summary{cursor:pointer;font-weight:700;color:#ffe48f;font-size:18px;
 </head>
 <body>
 
-<section id="home" class="screen on">
-  <div class="card">
+<section id="join" class="screen on">
+  <div class="jcard">
     <h1>명탐정 몽타주</h1>
-    <p class="sub">말로 정확하게 설명해서 우주 정거장 도둑을 잡아라!</p>
+    <div id="jStep"></div>
+  </div>
+  <button class="tlink" id="toTeacher">선생님 / 다른 활동 →</button>
+</section>
+
+<section id="home" class="screen">
+  <div class="card">
+    <button class="tlink" id="toJoin" style="padding:0;margin-bottom:10px">← 학생 입장 화면</button>
+    <h1>선생님 메뉴</h1>
+    <p class="sub">무엇을 할까요?</p>
 
     <div class="row"><label>활동</label>
       <div class="seg" data-key="mode">
-        <button data-v="game">도둑 찾기 게임</button>
+        <button data-v="host">온라인 반 대결</button>
+        <button data-v="game">도둑 찾기 (한 태블릿)</button>
         <button data-v="poster">현상수배서 (2차시)</button>
-        <button data-v="online">온라인 반 대결 (학생)</button>
-        <button data-v="board">점수판 (교사용)</button>
+        <button data-v="board">점수판 직접 입력</button>
       </div>
     </div>
-
-    <div class="row" data-show="online"><label>반 코드</label>
-      <input id="roomIn" class="tin" maxlength="6" placeholder="ABCD" autocomplete="off" spellcheck="false">
-      <div class="hint">선생님 화면에 보이는 반 코드를 넣어요.</div>
-    </div>
-    <div class="row" data-show="online"><label>팀 번호</label>
-      <div class="step" data-key="oteam"><button data-d="-1">−</button><span></span><button data-d="1">+</button></div>
-      <label class="sm">내 번호</label>
-      <div class="step" data-key="onum"><button data-d="-1">−</button><span></span><button data-d="1">+</button></div>
-      <div class="hint">라운드마다 팀 안에서 번호 순서대로 설명자가 바뀌어요. 역할은 앱이 정해 줘요.</div>
-    </div>
-    <div class="row" data-show="board"><label>점수판 방식</label>
-      <div class="seg" data-key="bmode">
-        <button data-v="manual">직접 입력</button>
-        <button data-v="online">온라인 반 대결 (자동 집계)</button>
-      </div>
-    </div>
+    <div class="row" data-show="host"><div class="hint" style="font-size:16px">반 코드(숫자 4자리)와 QR이 만들어져요. 학생은 사이트를 열고 <b>반 코드 → 팀 색깔 → 내 번호</b>만 누르면 들어와요. 라운드 진행·설명자 교대·변장·점수는 모두 자동이에요. 아래 설정이 반 전체에 적용돼요.</div></div>
 
     <div class="row" data-show="game"><label>내 역할</label>
       <div class="seg" data-key="role">
@@ -247,21 +269,21 @@ details.adv summary{cursor:pointer;font-weight:700;color:#ffe48f;font-size:18px;
       <div class="step" data-key="round"><button data-d="-1">−</button><span></span><button data-d="1">+</button></div>
       <div class="hint">같은 모둠 번호와 라운드를 넣으면 같은 도둑이 나와요. 모둠마다 번호가 다르면 도둑도 달라서 옆 모둠 설명을 들어도 소용없어요.</div>
     </div>
-    <div class="row" data-show="game poster board.bmode=online"><label>난이도</label>
+    <div class="row" data-show="game poster host"><label>난이도</label>
       <div class="seg" data-key="diff">
         <button data-v="easy">쉬움 (6마리)</button>
         <button data-v="normal">보통 (7마리)</button>
         <button data-v="hard">어려움 (8마리)</button>
       </div>
     </div>
-    <div class="row" data-show="game board.bmode=online"><label>변장 모드</label>
+    <div class="row" data-show="game host"><label>변장 모드</label>
       <div class="seg" data-key="disguise">
         <button data-v="off">끄기</button>
         <button data-v="on">켜기</button>
       </div>
     </div>
 
-    <details class="adv" data-show="game board.bmode=online">
+    <details class="adv" data-show="game host">
       <summary>세부 설정</summary>
       <div class="row"><label>움직임</label>
         <div class="seg" data-key="speed">
@@ -297,9 +319,8 @@ details.adv summary{cursor:pointer;font-weight:700;color:#ffe48f;font-size:18px;
       </div>
     </details>
 
-    <div class="row" data-show="board.bmode=manual"><div class="hint" style="font-size:16px">팀 대결 결과를 큰 화면에 띄우는 교사용 점수판이에요. 라운드마다 각 팀의 '맞춘 탐정 수'와 '탐정 수'를 입력하면 총점과 순위가 자동으로 계산돼요.</div></div>
-    <div class="row" data-show="board.bmode=online"><div class="hint" style="font-size:16px">반 코드를 만들어 학생 태블릿을 연결해요. 선생님이 라운드를 시작하면 모든 태블릿이 함께 넘어가고, 변장·설명 끝이 팀 안에서 자동으로 맞춰지며, 점수도 자동으로 모여요. 위 난이도와 세부 설정이 반 전체에 적용돼요.</div></div>
-    <div class="row" data-show="online board.bmode=online" id="fbWarn"><div class="err">아직 Firebase 설정이 없어요. index.html의 FIREBASE_CONFIG에 설정값을 넣어야 온라인 기능을 쓸 수 있어요.</div></div>
+    <div class="row" data-show="board"><div class="hint" style="font-size:16px">팀 대결 결과를 큰 화면에 띄우는 교사용 점수판이에요. 라운드마다 각 팀의 '맞춘 탐정 수'와 '탐정 수'를 입력하면 총점과 순위가 자동으로 계산돼요.</div></div>
+    <div class="row" data-show="host" id="fbWarn"><div class="err">아직 Firebase 설정이 없어요. index.html의 FIREBASE_CONFIG에 설정값을 넣어야 온라인 기능을 쓸 수 있어요.</div></div>
 
     <div class="row" style="margin-top:22px"><button id="go" class="btn big">시작하기</button><div class="err" id="err"></div></div>
   </div>
@@ -846,35 +867,99 @@ const R_=p=>FB.ref(FB.db,p);
 let CID='';
 try{CID=sessionStorage.getItem('mt-cid')||''}catch(e){}
 if(!CID){CID=Math.random().toString(36).slice(2,10);try{sessionStorage.setItem('mt-cid',CID)}catch(e){}}
-const randCode=()=>Array.from({length:4},()=>'ABCDEFGHJKMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*31)]).join('');
+const randCode=()=>String(1000+Math.floor(Math.random()*9000));
 const sortedNums=o=>Object.keys(o||{}).map(Number).sort((a,b)=>a-b);
 const roomCfg=()=>({diff:st.diff,disguise:st.disguise,listen:st.listen,speed:st.speed,turn:st.turn,vanish:st.vanish,limit:st.limit,total:st.total});
 
-/* 학생: 반 코드로 입장 → 라운드마다 설명자/탐정 자동 배정 */
-async function startOnline(){
-  const err=$('#err'),code=(st.room||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
-  if(!fbReady()){err.textContent='아직 Firebase 설정이 없어요.';return}
-  if(code.length<4){err.textContent='반 코드를 넣어 주세요.';return}
-  $('#go').disabled=true;err.textContent='연결하는 중…';
+/* 학생 입장: 반 코드(숫자 4자리) → 팀 색깔 → 내 번호, 세 번 누르면 끝 */
+const TEAMC=[null,['빨강','#ff8787'],['파랑','#74c0fc'],['초록','#8ce99a'],['노랑','#ffe066'],['보라','#d0bfff'],['주황','#ffc078']];
+const tname=t=>`${t}팀(${TEAMC[t][0]})`;
+const J={step:'code',code:'',cfg:null,team:0,players:{},msg:'',busy:false,off:null};
+function lastJoin(){try{return JSON.parse(localStorage.getItem('mt-last'))||{}}catch(e){return{}}}
+function renderJoin(){
+  if(J.off&&J.step!=='num'){J.off();J.off=null}
+  let h='';
+  if(J.step==='code'){
+    h=`<p class="jq">선생님이 알려 준 <b>반 코드</b>를 눌러요</p>
+      <div class="codebox">${[0,1,2,3].map(i=>`<span class="${i===J.code.length?'cur':''}">${J.code[i]||''}</span>`).join('')}</div>
+      <div class="pad">${[1,2,3,4,5,6,7,8,9].map(d=>`<button data-k="${d}">${d}</button>`).join('')}<button data-k="clr" class="sm">지우기</button><button data-k="0">0</button><button data-k="del">⌫</button></div>`;
+  }else if(J.step==='team'){
+    const last=lastJoin(),T=J.cfg.teams||3;
+    h=`${last.code===J.code&&last.t<=T?`<button class="btn big quick" data-q="1">지난번처럼 <b>${tname(last.t)} ${last.n}번</b>으로 들어가기</button>`:''}
+      <p class="jq">우리 팀은 무슨 색이에요?</p>
+      <div class="jgrid">${Array.from({length:T},(_,i)=>i+1).map(t=>`<button class="jbtn" data-t="${t}" style="background:${TEAMC[t][1]}">${TEAMC[t][0]}<small>${t}팀</small></button>`).join('')}</div>
+      <p><button class="tlink" data-back="code">← 반 코드 다시 넣기</button></p>`;
+  }else{
+    const t=J.team;
+    h=`<p class="jq"><span class="tdot" style="background:${TEAMC[t][1]}"></span>${tname(t)}에서 내 번호는?</p>
+      <div class="jgrid n">${[1,2,3,4,5,6,7,8].map(n=>{const used=J.players[n]&&J.players[n]!==CID;
+        return `<button class="jbtn" data-n="${n}" ${used?'disabled':''} style="background:${TEAMC[t][1]}">${n}<small>${used?'이미 들어옴':'번'}</small></button>`}).join('')}</div>
+      <p><button class="tlink" data-back="team">← 팀 다시 고르기</button></p>`;
+  }
+  $('#jStep').innerHTML=h+`<div class="jmsg">${J.msg}</div>`;
+}
+async function checkCode(){
+  J.busy=true;J.msg='확인하는 중…';renderJoin();
+  try{
+    await fb();
+    const s=await FB.get(R_(`rooms/${J.code}/cfg`));
+    if(!s.exists()){J.msg='없는 반 코드예요. 다시 눌러 보세요.';J.code=''}
+    else{J.cfg=s.val();J.step='team';J.msg=''}
+  }catch(e){J.msg='인터넷 연결을 확인해 주세요.';J.code=''}
+  J.busy=false;renderJoin();
+}
+function codeKey(k){
+  if(J.busy||J.step!=='code')return;
+  if(k==='del')J.code=J.code.slice(0,-1);
+  else if(k==='clr')J.code='';
+  else if(J.code.length<4)J.code+=k;
+  J.msg='';renderJoin();
+  if(J.code.length===4)checkCode();
+}
+function pickTeam(t){
+  J.team=t;J.step='num';J.players={};J.msg='';
+  if(J.off)J.off();
+  J.off=FB.onValue(R_(`rooms/${J.code}/players/${t}`),s=>{J.players=s.val()||{};if(J.step==='num'&&!J.busy)renderJoin()});
+  renderJoin();
+}
+async function joinRoom(code,t,n){
+  if(J.busy)return;
+  J.busy=true;J.msg='들어가는 중…';renderJoin();
   try{
     await fb();
     const cs=await FB.get(R_(`rooms/${code}/cfg`));
-    if(!cs.exists())throw new Error('없는 반 코드예요. 선생님 화면의 코드를 확인해요.');
+    if(!cs.exists())throw new Error('없는 반 코드예요.');
     const cfg=cs.val();
-    if(st.oteam>(cfg.teams||3))throw new Error(`이 반은 ${cfg.teams||3}팀까지 있어요.`);
-    const pref=R_(`rooms/${code}/players/${st.oteam}/${st.onum}`);
-    const ps=await FB.get(pref);
-    if(ps.exists()&&ps.val()!==CID)throw new Error(`${st.oteam}팀 ${st.onum}번은 이미 다른 기기가 쓰고 있어요.`);
+    if(t>(cfg.teams||3))throw new Error('지금은 없는 팀이에요. 팀을 다시 골라요.');
+    const pref=R_(`rooms/${code}/players/${t}/${n}`),ps=await FB.get(pref);
+    if(ps.exists()&&ps.val()!==CID)throw new Error(`${tname(t)} ${n}번에는 이미 다른 친구가 들어와 있어요.`);
     await FB.set(pref,CID);
     FB.onDisconnect(pref).remove();
-    err.textContent='';
-    stopAll();show('play');
-    cur.push(createOnline(code,cfg,pref));
-  }catch(e){err.textContent=e.message||String(e)}
-  finally{$('#go').disabled=false}
+    try{localStorage.setItem('mt-last',JSON.stringify({code,t,n}))}catch(e){}
+    if(J.off){J.off();J.off=null}
+    J.cfg=cfg;J.step='team';J.msg='';J.busy=false;
+    stopAll();homeScreen='join';show('play');
+    cur.push(createOnline(code,cfg,pref,t,n));
+    return;
+  }catch(e){J.msg=e.message||'들어가지 못했어요. 다시 해 보세요.'}
+  J.busy=false;renderJoin();
 }
-function createOnline(code,cfg,pref){
-  const t=st.oteam,me=st.onum,wrap=$('#panels');
+document.getElementById('jStep').onclick=e=>{
+  const b=e.target.closest('button');if(!b||b.disabled)return;
+  if(b.dataset.k)codeKey(b.dataset.k);
+  else if(b.dataset.t)pickTeam(+b.dataset.t);
+  else if(b.dataset.n)joinRoom(J.code,J.team,+b.dataset.n);
+  else if(b.dataset.q){const l=lastJoin();joinRoom(l.code,l.t,l.n)}
+  else if(b.dataset.back){J.step=b.dataset.back;if(J.step==='code')J.code='';J.msg='';renderJoin()}
+};
+document.addEventListener('keydown',e=>{
+  if(!$('#join').classList.contains('on')||J.step!=='code')return;
+  if(/^\d$/.test(e.key))codeKey(e.key);
+  else if(e.key==='Backspace')codeKey('del');
+});
+
+function createOnline(code,cfg,pref,t,me){
+  const wrap=$('#panels');
   $('#next').hidden=true;
   wrap.className='panels';wrap.innerHTML='';
   const panel=document.createElement('div');panel.className='panel';
@@ -882,11 +967,11 @@ function createOnline(code,cfg,pref){
   const stat=panel.querySelector('.ostat'),body=panel.querySelector('.pbody');
   let round=-1,child=null,unsubR=null,players={},alive=true;
   const offs=[];
-  const setCode=()=>{$('#code').textContent=`반 ${code} · ${t}팀 ${me}번 · ${round>0?'라운드 '+round+(cfg.total?' / '+cfg.total:''):'대기 중'}`};
+  const setCode=()=>{$('#code').textContent=`반 ${code} · ${tname(t)} ${me}번 · ${round>0?'라운드 '+round+(cfg.total?' / '+cfg.total:''):'대기 중'}`};
   function clearChild(){if(child){child.destroy();child=null}if(unsubR){unsubR();unsubR=null}body.innerHTML='';stat.textContent=''}
   function waitScreen(title,sub){clearChild();body.innerHTML=`<div class="exp center"><div class="passbox"><h2>${title}</h2><p>${sub}</p></div></div>`}
   function renderWait(){
-    waitScreen('⏳ 선생님이 시작할 때까지 기다려요',`반 ${code} · 우리 팀(${t}팀): ${sortedNums(players).map(n=>n+'번').join(', ')||'-'}`);
+    waitScreen('⏳ 선생님이 시작할 때까지 기다려요',`반 ${code} · 우리 팀 ${tname(t)}: ${sortedNums(players).map(n=>n+'번').join(', ')||'-'}`);
   }
   async function enterRound(r){
     clearChild();
@@ -935,7 +1020,16 @@ function createOnline(code,cfg,pref){
 }
 
 /* 교사: 반 만들기, 라운드 진행, 자동 점수판 */
-let hostCtl=null;
+let hostCtl=null,qrLib=null;
+function loadQR(){
+  if(!qrLib)qrLib=new Promise((res,rej)=>{
+    const s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js';
+    s.onload=()=>window.qrcode?res(window.qrcode):rej();s.onerror=rej;
+    document.head.appendChild(s);
+  });
+  return qrLib;
+}
 async function newRoom(){
   let code;
   do{code=randCode()}while((await FB.get(R_(`rooms/${code}/cfg`))).exists());
@@ -949,7 +1043,7 @@ async function startHost(){
   $('#go').disabled=true;err.textContent='연결하는 중…';
   try{
     await fb();
-    let code=st.hostRoom;
+    let code=/^\d{4}$/.test(st.hostRoom)?st.hostRoom:'';
     if(code){
       const s=await FB.get(R_('rooms/'+code));
       if(!s.exists())code='';
@@ -964,8 +1058,9 @@ async function startHost(){
   finally{$('#go').disabled=false}
 }
 function createHost(code){
-  const sec=$('#board');
-  let room={};
+  const sec=$('#board'),url=location.origin+location.pathname+'?c='+code;
+  let room={},qrSvg='';
+  loadQR().then(q=>{const g=q(0,'M');g.addData(url);g.make();qrSvg=g.createSvgTag({cellSize:4,margin:2,scalable:true});draw()}).catch(()=>{});
   function score(){
     const cfg=room.cfg||{},T=cfg.teams||3,r=room.round||0,R=room.r||{},rows=[];
     for(let t=1;t<=T;t++){
@@ -992,12 +1087,18 @@ function createHost(code){
       <button class="btn" data-h="start" ${last?'disabled':''}>${last?'마지막 라운드 끝':r===0?'1라운드 시작':`${r+1}라운드 시작`}</button>
       <button class="btn sub" data-h="new">새 반 만들기</button><button class="btn sub" data-h="home">처음으로</button></div>
     <div class="bwrap">
-      <div class="roomcode">학생 태블릿: <b>온라인 반 대결</b> → 반 코드 <span class="rc">${code}</span> · 팀 번호 · 내 번호 → 입장하기
-      ${r?`<br>지금 <b>${r}라운드</b>${cfg.total?' / '+cfg.total:''} 진행 중`:''}</div>
+      <div class="joinbox">
+        ${qrSvg?`<div class="qr">${qrSvg}</div>`:''}
+        <div><div>반 코드</div><div class="rc big">${code}</div>
+          <div class="jhow">사이트를 열고 <b>반 코드 → 팀 색깔 → 내 번호</b>를 눌러요${qrSvg?'<br>또는 태블릿 카메라로 QR을 찍어요':''}</div>
+          <div class="jurl">${esc(location.origin+location.pathname)}</div>
+          ${r?`<div style="margin-top:6px">지금 <b>${r}라운드</b>${cfg.total?' / '+cfg.total:''} 진행 중</div>`:''}
+        </div>
+      </div>
       <div class="teams">`;
     for(let t=1;t<=T;t++){
       const ps=sortedNums(players[t]),c=r?(R[r]||{})[t]:null,res=Object.values(c&&c.res||{});
-      h+=`<div class="tcard"><h3>${t}팀 <small style="font-size:15px;color:#9fb2ea">${ps.length}명 접속</small></h3>
+      h+=`<div class="tcard" style="border-top:8px solid ${TEAMC[t][1]}"><h3><span class="tdot" style="background:${TEAMC[t][1]}"></span>${tname(t)} <small style="font-size:15px;color:#9fb2ea">${ps.length}명 접속</small></h3>
         <div class="chipsx">${ps.map(n=>`<span class="${c&&c.ex===n?'ex':''}">${n}번</span>`).join('')||'<em>아직 아무도 없어요</em>'}</div>
         ${c&&c.ex?`<div>설명자 <b>${c.ex}번</b>${cfg.disguise==='on'?` · 변장 ${c.lv||0}/${MAXDIS}`:''}${cfg.listen==='on'?` · ${c.done?'찾는 중':'설명 중'}`:''}</div>
           <div>지목 ${res.length}/${c.det} · 정답 <b>${res.filter(x=>x.ok).length}</b></div>`:r?'<div><em>이번 라운드 참여 안 함</em></div>':''}
@@ -1007,12 +1108,12 @@ function createHost(code){
     const {rows,sorted}=score(),has=rows.some(x=>x.any);
     if(r){
       const w=sorted.filter(x=>x.rank===1);
-      h+=`<div class="winner">${!has?'점수가 모이면 순위가 나와요':w.length>1?`🏆 공동 1위: ${w.map(x=>x.t+'팀').join(', ')}`:`🏆 1위: ${w[0].t}팀!`}</div>
+      h+=`<div class="winner">${!has?'점수가 모이면 순위가 나와요':w.length>1?`🏆 공동 1위: ${w.map(x=>tname(x.t)).join(', ')}`:`🏆 1위: ${tname(w[0].t)}!`}</div>
       <div class="tscroll"><table class="btable"><tr><th>팀</th>`;
       for(let k=1;k<=r;k++)h+=`<th>${k}라운드<br><small>맞춘 수 / 탐정 수</small></th>`;
       h+=`<th>총점</th><th>평균 시간</th><th>순위</th></tr>`;
       for(const x of rows){
-        h+=`<tr class="${has&&x.rank===1?'first':''}"><td class="tname">${x.t}팀</td>`;
+        h+=`<tr class="${has&&x.rank===1?'first':''}"><td class="tname"><span class="tdot" style="background:${TEAMC[x.t][1]}"></span>${tname(x.t)}</td>`;
         x.cells.forEach(c=>{h+=`<td>${c?`${c.ok} / ${c.n}<div class="rs">${(c.ok/c.n).toFixed(2)}점${c.done<c.n?' · 진행 중':''}</div>`:'-'}</td>`});
         h+=`<td class="tot">${x.any?x.tot.toFixed(2):'-'}</td><td>${x.tm===Infinity?'-':x.tm+'초'}</td><td class="rank">${x.any?x.rank+'위':''}</td></tr>`;
       }
@@ -1055,7 +1156,7 @@ function createHost(code){
 
 /* ---------- 앱 ---------- */
 const $=s=>document.querySelector(s);
-const DEF={mode:'game',role:'demo',prole:'write',group:1,round:1,me:1,size:4,diff:'normal',speed:'slow',disguise:'off',turn:'normal',vanish:'normal',listen:'off',limit:0,total:0,room:'',oteam:1,onum:1,bmode:'manual',hostRoom:''};
+const DEF={mode:'host',role:'demo',prole:'write',group:1,round:1,me:1,size:4,diff:'normal',speed:'slow',disguise:'off',turn:'normal',vanish:'normal',listen:'off',limit:0,total:0,hostRoom:''};
 const st={...DEF};
 try{Object.assign(st,JSON.parse(localStorage.getItem('mt-settings')||'{}'))}catch(e){}
 function saveSt(){try{localStorage.setItem('mt-settings',JSON.stringify(st))}catch(e){}}
@@ -1064,7 +1165,7 @@ document.querySelectorAll('#home .seg').forEach(seg=>{
   const k=seg.dataset.key;
   if(![...seg.querySelectorAll('button')].some(b=>b.dataset.v===String(st[k])))st[k]=DEF[k];
 });
-const STEP={group:[1,30],round:[1,99],size:[2,8],me:[1,8],oteam:[1,6],onum:[1,8]};
+const STEP={group:[1,30],round:[1,99],size:[2,8],me:[1,8]};
 for(const k in STEP){st[k]=Math.min(STEP[k][1],Math.max(STEP[k][0],Math.floor(+st[k])||DEF[k]))}
 st.me=Math.min(st.me,st.size);
 
@@ -1078,13 +1179,13 @@ function syncHome(){
     seg.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b.dataset.v===String(st[k])));
   });
   document.querySelectorAll('#home .step').forEach(s=>{s.querySelector('span').textContent=st[s.dataset.key]});
-  // data-show="game poster board.bmode=online" → 활동이 일치하고, 조건(.키=값)이 있으면 그것도 일치할 때 보이기
+  // data-show="game poster host" → 활동이 일치하고, 조건(.키=값)이 있으면 그것도 일치할 때 보이기
   const vis=tok=>{const [m,c]=tok.split('.');if(m!==st.mode)return false;if(!c)return true;const [k,v]=c.split('=');return String(st[k])===v};
   document.querySelectorAll('#home [data-show]').forEach(el=>{el.hidden=!el.dataset.show.split(' ').some(vis)});
   if(fbReady())$('#fbWarn').hidden=true;
   $('#err').textContent='';
   $('#autoHint').textContent=`라운드마다 1번 → 2번 → … 순서로 설명자가 바뀌어요. 라운드 ${st.round}의 설명자는 ${explainerNo()}번이고, 나는 ${resolvedRole()==='explainer'?'설명자예요':'탐정이에요'}.`;
-  $('#go').textContent=st.mode==='board'?(st.bmode==='online'?'온라인 반 열기':'점수판 열기'):st.mode==='online'?'입장하기':'시작하기';
+  $('#go').textContent=st.mode==='host'?'온라인 반 열기':st.mode==='board'?'점수판 열기':'시작하기';
   saveSt();
 }
 document.querySelectorAll('#home .seg').forEach(seg=>seg.onclick=e=>{
@@ -1101,14 +1202,21 @@ document.querySelectorAll('#home .step').forEach(s=>s.onclick=e=>{
   syncHome();
 });
 
-$('#roomIn').value=st.room;
-$('#roomIn').oninput=e=>{st.room=e.target.value.toUpperCase().replace(/[^A-Z0-9]/g,'');saveSt()};
 
 function stopAll(){cur.forEach(c=>c.destroy());cur=[];if(hostCtl){hostCtl.destroy();hostCtl=null}}
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('on',s.id===id))}
 function isLast(){return st.mode==='game'&&st.total>0&&st.round>=st.total}
 function nextRound(){if(isLast())return;st.round=Math.min(99,st.round+1);saveSt();play()}
-function goHome(){stopAll();syncHome();show('home')}
+let homeScreen='join';
+function goHome(){
+  stopAll();
+  if(homeScreen==='join'){
+    if(!J.cfg){J.step='code';J.code=''}else J.step='team';
+    J.msg='';renderJoin();show('join');
+  }else{syncHome();show('home')}
+}
+$('#toTeacher').onclick=()=>{homeScreen='home';syncHome();show('home')};
+$('#toJoin').onclick=()=>{homeScreen='join';goHome()};
 function mk(wrap,label){
   const p=document.createElement('div');p.className='panel';
   p.innerHTML=(label?`<div class="plabel">${label}</div>`:'')+'<div class="pbody"></div>';
@@ -1116,8 +1224,7 @@ function mk(wrap,label){
 }
 
 function play(){
-  if(st.mode==='online'){startOnline();return}
-  if(st.mode==='board'&&st.bmode==='online'){startHost();return}
+  if(st.mode==='host'){startHost();return}
   stopAll();
   if(st.mode==='board'){show('board');renderBoard();return}
   show('play');
@@ -1172,6 +1279,13 @@ $('#board').addEventListener('click',e=>{
   if(b.dataset.ba==='home')goHome();
 });
 syncHome();
+// 주소로 바로 들어오기: ?c=1234 (QR) → 팀 고르기부터, ?teacher → 선생님 메뉴
+{
+  const qs=new URLSearchParams(location.search),pc=qs.get('c');
+  renderJoin();
+  if(qs.has('teacher')){homeScreen='home';show('home')}
+  else if(/^\d{4}$/.test(pc||'')){J.code=pc;checkCode()}
+}
 </script>
 </body>
 </html>
